@@ -3,49 +3,38 @@
 # Part 1
 
 def sum arr
-  sum_arr = 0
-  
+  result = 0
   arr.each do |e|
-    sum_arr += e
+    result += e
   end
-  
-  return sum_arr
+  result
 end
 
 
 def max_2_sum arr
   result = 0
-    if arr.size == 0
+    if arr.size == 0 then
       result = 0
-    elsif arr.size == 1
+    elsif arr.size == 1 then
       result = arr[0]
     else
        arr = arr.sort{|x,y| y<=>x}
       result = arr[0]+arr[1]
     end 
-  return result
+  result
 
 end
 
 def sum_to_n? arr, n
-  result = false
-  
-  for i in 0..(arr.length - 1)
-    for j in (i + 1)..(arr.length - 1)
-      sum = arr[i] + arr[j]
-      if(sum == n)
-        result = true
-      end
-    end
-  end
-  
-  return result
+  arr = arr.combination(2)
+  arr.each{|x| return true if x.sum == n}
+  false
 end
 
 # Part 2
 
 def hello(name)
-  return "Hello, " + name
+  "Hello, " + name
 end
 
 def starts_with_consonant? s
@@ -53,8 +42,7 @@ def starts_with_consonant? s
 end
 
 def binary_multiple_of_4? s
-  return false unless s =~ /^[01]+$/
-  return s.to_i(2) % 4 == 0
+  /^(0|00|([01]+00))$/.match?(s)
 end
 
 # Part 3
@@ -62,13 +50,17 @@ end
 class BookInStock
 attr_accessor :price, :isbn
   
-  def initialize(isbn, price)
-    raise ArgumentError if isbn.empty? or price <= 0
-    @isbn = isbn
-    @price = price
+  def initialize(a,b)
+    raise ArgumentError, 'Empty isbn value' unless a!=''    
+    raise ArgumentError, 'Need positive price' unless b > 0
+    @isbn = a
+    @price = b  
   end
   
+  attr_accessor :isbn
+  attr_accessor :price
+
   def price_as_string
-    "$" + '%.2f' % price
+    '$%.2f'% [@price]
   end
 end
